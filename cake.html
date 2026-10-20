@@ -19,7 +19,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        overflow: hidden;
+      overflow: hidden;
         position: relative;
         color: #ffffff;
       }
@@ -351,7 +351,14 @@
     <div class="wish-message" id="wishMessage">
       <h2>✨ Happy 20th Birthday, Chubbi! ✨</h2>
       <p>Make a wish, my prettiest girl! May your 20s be filled with endless love, happiness, laughter, and all your dreams coming true! 🎂❤️</p>
-      <button class="btn" onclick="closeWishMessage()">Thank you, my love! ❤️</button>
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 10px;">
+        <button class="btn" onclick="goNext()" style="background: linear-gradient(45deg, #FF1493, #8A2BE2); box-shadow: 0 4px 20px rgba(255, 20, 147, 0.7); font-size: 1.05rem; padding: 12px 24px;">
+          Read Your Love Letter 💌
+        </button>
+        <button class="btn" onclick="closeWishMessage()" style="background: rgba(255, 255, 255, 0.16); border: 1px solid rgba(255, 255, 255, 0.45); padding: 12px 20px;">
+          Admire the Cake 🎂
+        </button>
+      </div>
     </div>
 
     <!-- Navigation Buttons -->
@@ -456,8 +463,17 @@
           candlesBlown++;
           createSparkleEffect(candle);
 
+          // Gentle haptic feedback on mobile tap
+          if (navigator.vibrate) {
+            try { navigator.vibrate(35); } catch (e) {}
+          }
+
           if (candlesBlown >= totalCandles && !allCandlesBlown) {
             allCandlesBlown = true;
+            // Celebratory haptic pulse on completing all 20 candles
+            if (navigator.vibrate) {
+              try { navigator.vibrate([60, 50, 120]); } catch (e) {}
+            }
             setTimeout(showWishMessage, 800);
           }
         }

@@ -155,6 +155,13 @@
         transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         border: 10px solid white;
         background: white;
+        cursor: pointer;
+      }
+
+      .memory-card:hover {
+        transform: translateY(-8px) scale(1.03) rotate(0deg) !important;
+        box-shadow: 0 18px 40px rgba(255, 20, 147, 0.5), 0 0 30px rgba(255, 255, 255, 0.5);
+        z-index: 5;
       }
 
       .memory-card.visible {
@@ -196,6 +203,136 @@
         transform: rotate(15deg);
         filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
         animation: bounce 2.2s infinite;
+      }
+
+      /* Photo Lightbox Modal */
+      .photo-lightbox {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background: rgba(10, 5, 20, 0.94) !important;
+        backdrop-filter: blur(14px) !important;
+        -webkit-backdrop-filter: blur(14px) !important;
+        z-index: 100005 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        padding: 20px;
+        user-select: none;
+      }
+
+      .photo-lightbox.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+      }
+
+      .lightbox-content-wrap {
+        position: relative;
+        max-width: 92vw;
+        max-height: 82vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: scale(0.92);
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      .photo-lightbox.active .lightbox-content-wrap {
+        transform: scale(1);
+      }
+
+      .lightbox-img {
+        max-width: 88vw;
+        max-height: 78vh;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        border-radius: 16px;
+        border: 4px solid rgba(255, 255, 255, 0.95);
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8), 0 0 35px rgba(255, 105, 180, 0.5);
+        background: #150d22;
+        transition: opacity 0.25s ease;
+      }
+
+      .lightbox-close {
+        position: absolute;
+        top: 25px;
+        right: 25px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        color: white;
+        font-size: 26px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.25s ease;
+        z-index: 100002;
+        backdrop-filter: blur(8px);
+      }
+
+      .lightbox-close:hover {
+        background: rgba(255, 20, 147, 0.85);
+        transform: scale(1.12);
+      }
+
+      .lightbox-nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        color: white;
+        font-size: 26px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.25s ease;
+        z-index: 100001;
+        backdrop-filter: blur(8px);
+      }
+
+      .lightbox-nav-btn:hover {
+        background: rgba(255, 20, 147, 0.85);
+        transform: translateY(-50%) scale(1.12);
+      }
+
+      .lightbox-prev { left: 30px; }
+      .lightbox-next { right: 30px; }
+
+      .lightbox-counter {
+        margin-top: 14px;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: #ffd6f1;
+        letter-spacing: 1px;
+        background: rgba(20, 10, 30, 0.75);
+        padding: 6px 20px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(8px);
+      }
+
+      @media (max-width: 768px) {
+        .lightbox-nav-btn { width: 42px; height: 42px; font-size: 20px; }
+        .lightbox-prev { left: 10px; }
+        .lightbox-next { right: 10px; }
+        .lightbox-close { top: 15px; right: 15px; width: 42px; height: 42px; font-size: 22px; }
       }
 
       .navigation-buttons {
@@ -339,6 +476,17 @@
       </div>
     </div>
 
+    <!-- Photo Lightbox Modal -->
+    <div class="photo-lightbox" id="photoLightbox" role="dialog" aria-modal="true" aria-label="Photo Viewer">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close viewer">✕</button>
+      <button class="lightbox-nav-btn lightbox-prev" id="lightboxPrev" aria-label="Previous photo">❮</button>
+      <button class="lightbox-nav-btn lightbox-next" id="lightboxNext" aria-label="Next photo">❯</button>
+      <div class="lightbox-content-wrap" id="lightboxWrap">
+        <img src="" alt="Photo of Chubbi Full View" class="lightbox-img" id="lightboxImg">
+      </div>
+      <div class="lightbox-counter" id="lightboxCounter">1 / 13 💕</div>
+    </div>
+
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
@@ -402,6 +550,88 @@
         const backButton = document.getElementById("backButton");
         const nextButton = document.getElementById("nextButton");
 
+        const lightbox = document.getElementById("photoLightbox");
+        const lightboxImg = document.getElementById("lightboxImg");
+        const lightboxCounter = document.getElementById("lightboxCounter");
+        const lightboxClose = document.getElementById("lightboxClose");
+        const lightboxPrev = document.getElementById("lightboxPrev");
+        const lightboxNext = document.getElementById("lightboxNext");
+        let activePhotoIndex = 0;
+
+        window.openLightbox = function(index) {
+          activePhotoIndex = index;
+          updateLightboxPhoto();
+          if (lightbox) {
+            lightbox.classList.add("active");
+          }
+          document.body.style.overflow = "hidden";
+        };
+
+        window.closeLightbox = function() {
+          if (lightbox) {
+            lightbox.classList.remove("active");
+          }
+          document.body.style.overflow = "";
+        };
+
+        function updateLightboxPhoto() {
+          if (!lightboxImg) return;
+          lightboxImg.style.opacity = "0.3";
+          lightboxImg.src = photoFiles[activePhotoIndex];
+          lightboxImg.onload = () => {
+            lightboxImg.style.opacity = "1";
+          };
+          if (lightboxCounter) {
+            lightboxCounter.textContent = `${activePhotoIndex + 1} / ${photoFiles.length} 💕`;
+          }
+        }
+
+        window.showNextPhoto = function() {
+          activePhotoIndex = (activePhotoIndex + 1) % photoFiles.length;
+          updateLightboxPhoto();
+        };
+
+        window.showPrevPhoto = function() {
+          activePhotoIndex = (activePhotoIndex - 1 + photoFiles.length) % photoFiles.length;
+          updateLightboxPhoto();
+        };
+
+        if (lightboxClose) lightboxClose.addEventListener("click", window.closeLightbox);
+        if (lightboxNext) lightboxNext.addEventListener("click", (e) => { e.stopPropagation(); window.showNextPhoto(); });
+        if (lightboxPrev) lightboxPrev.addEventListener("click", (e) => { e.stopPropagation(); window.showPrevPhoto(); });
+
+        if (lightbox) {
+          lightbox.addEventListener("click", (e) => {
+            if (e.target === lightbox || e.target.id === "lightboxWrap") {
+              window.closeLightbox();
+            }
+          });
+        }
+
+        document.addEventListener("keydown", (e) => {
+          if (!lightbox || !lightbox.classList.contains("active")) return;
+          if (e.key === "Escape") window.closeLightbox();
+          if (e.key === "ArrowRight") window.showNextPhoto();
+          if (e.key === "ArrowLeft") window.showPrevPhoto();
+        });
+
+        // Touch swipe on mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        if (lightbox) {
+          lightbox.addEventListener("touchstart", (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+          }, { passive: true });
+          lightbox.addEventListener("touchend", (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 45) {
+              if (diff > 0) window.showNextPhoto();
+              else window.showPrevPhoto();
+            }
+          }, { passive: true });
+        }
+
         let slideshowInterval;
         let currentSlide = 0;
 
@@ -412,7 +642,9 @@
 
           const memoryCard = document.createElement("div");
           memoryCard.className = "memory-card";
+          memoryCard.title = "Click to view full photo";
           memoryCard.style.setProperty("--rotate", `${rot}deg`);
+          memoryCard.setAttribute("onclick", `openLightbox(${index})`);
 
           const tapeElement = document.createElement("div");
           tapeElement.className = "card-tape";
@@ -434,6 +666,12 @@
           memoryCard.appendChild(tapeElement);
           memoryCard.appendChild(imgElement);
           memoryCard.appendChild(stickerElement);
+
+          // Clicking photo card opens the lightbox
+          memoryCard.addEventListener("click", () => {
+            window.openLightbox(index);
+          });
+
           galleryElement.appendChild(memoryCard);
         });
 

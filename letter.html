@@ -363,6 +363,17 @@
             transform: translateY(-2px);
         }
 
+        .replay-button {
+            background: linear-gradient(45deg, #FF1493, #8A2BE2) !important;
+            border: 1px solid rgba(255, 255, 255, 0.8) !important;
+            box-shadow: 0 4px 18px rgba(255, 20, 147, 0.55) !important;
+        }
+
+        .replay-button:hover {
+            transform: translateY(-3px) scale(1.04) !important;
+            box-shadow: 0 8px 28px rgba(255, 20, 147, 0.85) !important;
+        }
+
         /* Download Gift Button */
         #download-gift-btn {
             background: linear-gradient(45deg, #ff85a2, #ff3366);
@@ -474,9 +485,12 @@ I love you more than words can explain. You're my favourite human, my forever cr
             </button>
         </div>
 
-        <div class="navigation">
+        <div class="navigation" style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
             <a href="cake.html" class="back-button">
                 <i class="fas fa-arrow-left"></i> Back to Birthday Cake
+            </a>
+            <a href="index.html" class="back-button replay-button">
+                <i class="fas fa-redo-alt"></i> Replay Our Story 💫
             </a>
         </div>
     </div>

@@ -372,6 +372,70 @@
     }
   }
 
+  // Soft Romantic Heart Cursor Sparks (Desktop only, throttled & lightweight)
+  function initHeartCursorTrail() {
+    if (!window.matchMedia || !window.matchMedia('(pointer: fine)').matches) return;
+
+    const heartSymbols = ['❤️', '💖', '✨', '💕', '🌸', '💫'];
+    let lastTime = 0;
+    let lastX = 0;
+    let lastY = 0;
+
+    const style = document.createElement('style');
+    style.textContent = `
+      .cursor-heart-particle {
+        position: fixed;
+        pointer-events: none;
+        z-index: 99999;
+        font-size: 14px;
+        user-select: none;
+        transform: translate(-50%, -50%) scale(1);
+        animation: cursorHeartFloat 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        will-change: transform, opacity;
+      }
+      @keyframes cursorHeartFloat {
+        0% {
+          opacity: 0.9;
+          transform: translate(-50%, -50%) scale(0.6) rotate(0deg);
+        }
+        50% {
+          opacity: 0.8;
+          transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% - 24px)) scale(1.1) rotate(var(--rot, 15deg));
+        }
+        100% {
+          opacity: 0;
+          transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% - 48px)) scale(0.4) rotate(var(--rot, 30deg));
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    window.addEventListener('mousemove', (e) => {
+      const now = performance.now();
+      const dist = Math.hypot(e.clientX - lastX, e.clientY - lastY);
+      if (now - lastTime < 75 && dist < 22) return;
+      lastTime = now;
+      lastX = e.clientX;
+      lastY = e.clientY;
+
+      const heart = document.createElement('span');
+      heart.className = 'cursor-heart-particle';
+      heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+      heart.style.left = `${e.clientX}px`;
+      heart.style.top = `${e.clientY}px`;
+      heart.style.setProperty('--dx', `${(Math.random() - 0.5) * 30}px`);
+      heart.style.setProperty('--rot', `${(Math.random() - 0.5) * 50}deg`);
+      if (Math.random() > 0.5) {
+        heart.style.fontSize = `${10 + Math.random() * 8}px`;
+      }
+
+      document.body.appendChild(heart);
+      setTimeout(() => {
+        if (heart.parentNode) heart.parentNode.removeChild(heart);
+      }, 1150);
+    }, { passive: true });
+  }
+
   // Export methods globally
   window.BgMusicController = {
     start: startMedia,
@@ -382,8 +446,12 @@
   };
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initMedia);
+    document.addEventListener('DOMContentLoaded', () => {
+      initMedia();
+      initHeartCursorTrail();
+    });
   } else {
     initMedia();
+    initHeartCursorTrail();
   }
 })();
