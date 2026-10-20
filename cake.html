@@ -3,19 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Magical Birthday Cake</title>
+    <title>20 Magical Candles for Chubbi 🎂</title>
     <style>
-      /* Global Styles */
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial,
-          sans-serif;
+        font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
       }
 
       body {
-        background: linear-gradient(135deg, #ffcce6, #c4e0ff);
+        background: transparent;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
@@ -23,9 +21,9 @@
         justify-content: center;
         overflow: hidden;
         position: relative;
+        color: #ffffff;
       }
 
-      /* Floating Balloons */
       .balloon {
         position: absolute;
         width: 40px;
@@ -33,122 +31,106 @@
         border-radius: 50%;
         animation: float 15s infinite ease-in-out;
         z-index: 1;
+        pointer-events: none;
       }
 
       @keyframes float {
-        0% {
-          transform: translateY(100vh) translateX(0);
-          opacity: 1;
-        }
-        100% {
-          transform: translateY(-100px) translateX(50px);
-          opacity: 0;
-        }
+        0% { transform: translateY(100vh) translateX(0); opacity: 1; }
+        100% { transform: translateY(-100px) translateX(50px); opacity: 0; }
       }
 
-      /* Confetti */
       .confetti {
         position: absolute;
         width: 10px;
         height: 10px;
-        background-color: #ffcc00;
         opacity: 0;
         animation: confettiFall 5s infinite ease-out;
         z-index: 1;
+        pointer-events: none;
       }
 
       @keyframes confettiFall {
-        0% {
-          transform: translateY(-10vh) rotate(0deg);
-          opacity: 1;
-        }
-        100% {
-          transform: translateY(100vh) rotate(720deg);
-          opacity: 0;
-        }
+        0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
       }
 
-      /* Birthday Cake Container */
-      .cake-container {
-        position: relative;
-        width: 300px;
-        height: 300px;
-        margin: 20px auto;
+      .cake-title {
+        text-align: center;
+        font-size: 2.2rem;
+        margin-bottom: 1.5rem;
+        color: #ffffff;
+        text-shadow: 0 0 15px rgba(255, 105, 180, 0.9), 0 0 30px rgba(255, 20, 147, 0.8);
         z-index: 10;
       }
 
-      /* Cake Base */
+      .cake-container {
+        position: relative;
+        width: 360px;
+        height: 330px;
+        margin: 10px auto;
+        z-index: 10;
+      }
+
+      /* Cake Layers */
       .cake {
         position: absolute;
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
-        width: 200px;
-        height: 120px;
+        width: 280px;
+        height: 130px;
         background: linear-gradient(to right, #ff85a2, #ff99b6);
-        border-radius: 10px 10px 0 0;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        border-radius: 12px 12px 0 0;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
       }
 
       .cake:before {
         content: "";
         position: absolute;
-        top: -40px;
-        left: 0;
-        width: 100%;
-        height: 40px;
+        top: -45px;
+        left: 10%;
+        width: 80%;
+        height: 45px;
         background: linear-gradient(to right, #fc6c85, #ff85a2);
-        border-radius: 10px 10px 0 0;
+        border-radius: 12px 12px 0 0;
       }
 
       .cake:after {
         content: "";
         position: absolute;
-        top: -70px;
-        left: 10%;
-        width: 80%;
-        height: 30px;
+        top: -85px;
+        left: 20%;
+        width: 60%;
+        height: 40px;
         background: linear-gradient(to right, #ffb3c6, #ffcce6);
-        border-radius: 10px 10px 0 0;
+        border-radius: 12px 12px 0 0;
       }
 
-      /* Frosting & Decorations */
-      .frosting {
+      /* 20 Candles Layout: 2 Rows */
+      .candle-row {
         position: absolute;
-        top: -75px;
-        left: 15%;
-        width: 70%;
-        height: 5px;
-        background: #ffffff;
-        border-radius: 5px;
-        box-shadow: 0 0 5px #ffcce6;
-      }
-
-      .decoration {
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: #ff3366;
-        box-shadow: 0 0 5px #ff99b6;
-      }
-
-      /* Candles */
-      .candle-container {
-        position: absolute;
-        top: -95px;
-        left: 0;
         width: 100%;
         display: flex;
         justify-content: center;
-        gap: 20px;
         z-index: 15;
+      }
+
+      /* Top row: 10 candles */
+      .candle-row-top {
+        top: -115px;
+        gap: 12px;
+      }
+
+      /* Lower row: 10 candles */
+      .candle-row-bottom {
+        top: -65px;
+        gap: 14px;
       }
 
       .candle {
         position: relative;
-        width: 8px;
-        height: 30px;
+        width: 7px;
+        height: 28px;
         background: linear-gradient(to top, #ffff99, #ff9933);
         border-radius: 4px;
         cursor: pointer;
@@ -157,33 +139,22 @@
 
       .flame {
         position: absolute;
-        top: -20px;
+        top: -18px;
         left: 50%;
         transform: translateX(-50%);
-        width: 12px;
-        height: 20px;
-        background: radial-gradient(
-          ellipse at center,
-          #ffff00,
-          #ff9900,
-          #ff6600
-        );
+        width: 10px;
+        height: 18px;
+        background: radial-gradient(ellipse at center, #ffff00, #ff9900, #ff6600);
         border-radius: 50% 50% 20% 20%;
-        box-shadow: 0 0 10px #ff9900, 0 0 20px #ffff00;
+        box-shadow: 0 0 10px #ff9900, 0 0 18px #ffff00;
         opacity: 1;
         animation: flicker 0.5s infinite alternate;
         z-index: 20;
       }
 
       @keyframes flicker {
-        0% {
-          transform: translateX(-50%) scale(1);
-          opacity: 1;
-        }
-        100% {
-          transform: translateX(-50%) scale(1.1);
-          opacity: 0.9;
-        }
+        0% { transform: translateX(-50%) scale(1); opacity: 1; }
+        100% { transform: translateX(-50%) scale(1.15); opacity: 0.9; }
       }
 
       .candle.blown .flame {
@@ -194,40 +165,29 @@
 
       .smoke {
         position: absolute;
-        top: -25px;
+        top: -22px;
         left: 50%;
         transform: translateX(-50%);
-        width: 8px;
+        width: 6px;
         height: 0;
-        background: rgba(200, 200, 200, 0.5);
+        background: rgba(220, 220, 220, 0.6);
         border-radius: 10px;
         opacity: 0;
         transition: all 0.5s ease;
       }
 
       .candle.blown .smoke {
-        height: 30px;
-        opacity: 0.7;
+        height: 26px;
+        opacity: 0.8;
         animation: smokeRise 2s forwards;
       }
 
       @keyframes smokeRise {
-        0% {
-          height: 0;
-          opacity: 0;
-        }
-        20% {
-          height: 10px;
-          opacity: 0.7;
-        }
-        100% {
-          height: 30px;
-          opacity: 0;
-          transform: translateX(-50%) translateY(-30px) scale(1.5);
-        }
+        0% { height: 0; opacity: 0; }
+        20% { height: 10px; opacity: 0.8; }
+        100% { height: 26px; opacity: 0; transform: translateX(-50%) translateY(-25px) scale(1.4); }
       }
 
-      /* Sparkles */
       .sparkle {
         position: absolute;
         width: 4px;
@@ -236,41 +196,34 @@
         border-radius: 50%;
         box-shadow: 0 0 5px #ffff99;
         opacity: 0;
-        z-index: 12;
+        z-index: 25;
       }
 
       @keyframes sparkle {
-        0% {
-          transform: scale(0) rotate(0deg);
-          opacity: 0;
-        }
-        50% {
-          opacity: 1;
-        }
-        100% {
-          transform: scale(1.5) rotate(90deg);
-          opacity: 0;
-        }
+        0% { transform: scale(0) rotate(0deg); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: scale(1.5) rotate(90deg); opacity: 0; }
       }
 
-      /* Enhanced Wish Message */
+      /* Enhanced Wish Message Popup */
       .wish-message {
         position: fixed;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%) scale(0);
-        background: rgba(255, 255, 255, 0.95);
-        padding: 25px;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(255, 105, 180, 0.8),
-          0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 51, 102, 0.4);
+        background: rgba(25, 12, 35, 0.94);
+        padding: 30px;
+        border-radius: 26px;
+        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.7), 0 0 35px rgba(255, 105, 180, 0.7);
         text-align: center;
-        z-index: 100;
+        z-index: 10001;
         opacity: 0;
         width: 90%;
-        max-width: 400px;
+        max-width: 450px;
         transition: all 0.5s ease;
-        border: 3px solid rgba(255, 255, 255, 0.7);
+        border: 2px solid rgba(255, 182, 193, 0.8);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
       }
 
       .wish-message.show {
@@ -280,40 +233,26 @@
       }
 
       @keyframes bounceIn {
-        0% {
-          transform: translate(-50%, -50%) scale(0);
-          opacity: 0;
-        }
-        60% {
-          transform: translate(-50%, -50%) scale(1.1);
-          opacity: 1;
-        }
-        100% {
-          transform: translate(-50%, -50%) scale(1);
-          opacity: 1;
-        }
+        0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+        60% { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
+        100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
       }
 
       .wish-message h2 {
-        color: #ff3366;
+        color: #ffffff;
         font-size: 28px;
         margin-bottom: 15px;
-        text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
-        background: linear-gradient(45deg, #ff3366, #ff66b3);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        text-shadow: 0 0 15px rgba(255, 105, 180, 0.9);
       }
 
       .wish-message p {
-        color: #333;
-        font-size: 20px;
-        margin-bottom: 20px;
-        line-height: 1.5;
+        color: #ffd6f1;
+        font-size: 19px;
+        margin-bottom: 22px;
+        line-height: 1.55;
         font-weight: 500;
       }
 
-      /* Fireworks */
       .firework {
         position: absolute;
         width: 5px;
@@ -328,19 +267,16 @@
           transform: scale(0);
           opacity: 1;
           box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.9),
-            0 0 0 0px rgba(255, 0, 102, 0.9), 0 0 0 0px rgba(255, 255, 0, 0.9),
-            0 0 0 0px rgba(51, 204, 255, 0.9);
+            0 0 0 0px rgba(255, 0, 102, 0.9), 0 0 0 0px rgba(255, 255, 0, 0.9);
         }
         100% {
           transform: scale(1);
           opacity: 0;
-          box-shadow: 0 0 0 50px rgba(255, 255, 255, 0),
-            0 0 0 100px rgba(255, 0, 102, 0), 0 0 0 150px rgba(255, 255, 0, 0),
-            0 0 0 200px rgba(51, 204, 255, 0);
+          box-shadow: 0 0 0 60px rgba(255, 255, 255, 0),
+            0 0 0 120px rgba(255, 0, 102, 0), 0 0 0 180px rgba(255, 255, 0, 0);
         }
       }
 
-      /* Navigation Buttons */
       .nav-buttons {
         position: fixed;
         bottom: 30px;
@@ -353,403 +289,144 @@
       }
 
       .btn {
-        padding: 12px 24px;
+        padding: 12px 26px;
         background: linear-gradient(to right, #ff85a2, #ff3366);
         color: white;
-        border: none;
+        border: 1px solid rgba(255, 255, 255, 0.6);
         border-radius: 30px;
         cursor: pointer;
         font-size: 16px;
         font-weight: 600;
-        box-shadow: 0 5px 15px rgba(255, 51, 102, 0.4);
+        box-shadow: 0 5px 18px rgba(255, 51, 102, 0.5);
         transition: all 0.3s ease;
         outline: none;
       }
 
       .btn:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(255, 51, 102, 0.6);
+        box-shadow: 0 8px 25px rgba(255, 51, 102, 0.7);
       }
 
-      .btn:active {
-        transform: translateY(-1px);
-        box-shadow: 0 5px 10px rgba(255, 51, 102, 0.4);
-      }
-
-      /* Improved Responsive Design */
       @media (max-width: 768px) {
-        .cake-container {
-          width: 250px;
-          height: 250px;
-        }
-
-        .cake {
-          width: 160px;
-          height: 90px;
-        }
-
-        .candle-container {
-          gap: 15px;
-        }
-
-        .wish-message h2 {
-          font-size: 24px;
-        }
-
-        .wish-message p {
-          font-size: 18px;
-        }
-
-        .nav-buttons {
-          padding: 0 20px;
-          bottom: 20px;
-        }
-
-        .btn {
-          padding: 10px 18px;
-          font-size: 15px;
-        }
+        .cake-title { font-size: 1.8rem; }
+        .cake-container { width: 320px; height: 300px; }
+        .cake { width: 240px; }
+        .nav-buttons { padding: 0 20px; bottom: 20px; }
+        .btn { padding: 10px 18px; font-size: 15px; }
       }
 
       @media (max-width: 480px) {
-        .cake-container {
-          width: 200px;
-          height: 200px;
-          margin: 10px auto;
-        }
-
-        .cake {
-          width: 130px;
-          height: 80px;
-        }
-
-        .candle-container {
-          gap: 12px;
-          top: -85px;
-        }
-
-        .candle {
-          width: 6px;
-          height: 25px;
-        }
-
-        .wish-message {
-          width: 85%;
-          padding: 20px;
-        }
-
-        .wish-message h2 {
-          font-size: 22px;
-          margin-bottom: 10px;
-        }
-
-        .wish-message p {
-          font-size: 16px;
-          margin-bottom: 15px;
-        }
-
-        .nav-buttons {
-          padding: 0 15px;
-          bottom: 15px;
-        }
-
-        .btn {
-          padding: 8px 14px;
-          font-size: 14px;
-          white-space: nowrap;
-        }
-      }
-
-      /* Extra small devices */
-      @media (max-width: 360px) {
-        .cake-container {
-          width: 180px;
-          height: 180px;
-        }
-
-        .cake {
-          width: 110px;
-          height: 70px;
-        }
-
-        .candle-container {
-          gap: 10px;
-        }
-
-        .wish-message {
-          width: 90%;
-          padding: 15px;
-        }
-
-        .wish-message h2 {
-          font-size: 20px;
-        }
-
-        .wish-message p {
-          font-size: 14px;
-        }
-
-        .nav-buttons {
-          flex-direction: column;
-          align-items: center;
-          gap: 10px;
-        }
-
-        .btn {
-          width: 100%;
-          text-align: center;
-          font-size: 13px;
-        }
-      }
-    </style>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <script
-      bis_use="true"
-      type="text/javascript"
-      charset="utf-8"
-      data-bis-config='["facebook.com/","twitter.com/","youtube-nocookie.com/embed/","//vk.com/","//www.vk.com/","linkedin.com/","//www.linkedin.com/","//instagram.com/","//www.instagram.com/","//www.google.com/recaptcha/api2/","//hangouts.google.com/webchat/","//www.google.com/calendar/","//www.google.com/maps/embed","spotify.com/","soundcloud.com/","//player.vimeo.com/","//disqus.com/","//tgwidget.com/","//js.driftt.com/","friends2follow.com","/widget","login","//video.bigmir.net/","blogger.com","//smartlock.google.com/","//keep.google.com/","/web.tolstoycomments.com/","moz-extension://","chrome-extension://","/auth/","//analytics.google.com/","adclarity.com","paddle.com/checkout","hcaptcha.com","recaptcha.net","2captcha.com","accounts.google.com","www.google.com/shopping/customerreviews","buy.tinypass.com","gstatic.com","secureir.ebaystatic.com","docs.google.com","contacts.google.com","github.com","mail.google.com","chat.google.com","audio.xpleer.com","keepa.com","static.xx.fbcdn.net","sas.selleramp.com","1plus1.video","console.googletagservices.com","//lnkd.demdex.net/","//radar.cedexis.com/","//li.protechts.net/","challenges.cloudflare.com/","ogs.google.com"]'
-      src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/traffic.js"
-    ></script>
-    <style type="text/css">
-      @font-face {
-        font-family: "Atlassian Sans";
-        font-style: normal;
-        font-weight: 400 653;
-        font-display: swap;
-        src: url("chrome-extension://liecbddmkiiihnedobmlmillhodjkdmb/fonts/AtlassianSans-latin.woff2")
-          format("woff2");
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
-          U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
-          U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        .cake-title { font-size: 1.5rem; }
+        .cake-container { width: 290px; height: 280px; }
+        .cake { width: 220px; height: 110px; }
+        .candle-row-top { gap: 8px; top: -105px; }
+        .candle-row-bottom { gap: 9px; top: -58px; }
+        .candle { width: 5.5px; height: 24px; }
+        .flame { width: 8px; height: 15px; top: -15px; }
+        .nav-buttons { padding: 0 15px; bottom: 15px; }
+        .btn { padding: 9px 14px; font-size: 14px; }
       }
     </style>
   </head>
-  <body
-    __processed_7adb44bb-c731-4b39-a819-dea3d74cf4d5__="true"
-    bis_register="W3sibWFzdGVyIjp0cnVlLCJleHRlbnNpb25JZCI6ImVwcGlvY2VtaG1ubGJoanBsY2drb2ZjaWllZ29tY29uIiwiYWRibG9ja2VyU3RhdHVzIjp7IkRJU1BMQVkiOiJkaXNhYmxlZCIsIkZBQ0VCT09LIjoiZGlzYWJsZWQiLCJUV0lUVEVSIjoiZGlzYWJsZWQiLCJSRURESVQiOiJkaXNhYmxlZCIsIlBJTlRFUkVTVCI6ImRpc2FibGVkIiwiSU5TVEFHUkFNIjoiZGlzYWJsZWQiLCJMSU5LRURJTiI6ImRpc2FibGVkIiwiQ09ORklHIjoiZGlzYWJsZWQifSwidmVyc2lvbiI6IjIuMC4yMiIsInNjb3JlIjoyMDAyMn1d"
-    data-new-gr-c-s-check-loaded="14.1235.0"
-    data-gr-ext-installed=""
-  >
-    <!-- Balloons and Confetti will be added by JavaScript -->
+  <body>
+    <h1 class="cake-title">Blow Out Your 20 Candles, Chubbi! 🕯️✨</h1>
 
-    <!-- Birthday Cake -->
-    <div class="cake-container" bis_skin_checked="1">
-      <div class="cake" bis_skin_checked="1">
-        <!-- Candles will be added by JavaScript -->
-        <div class="candle-container" id="candleContainer" bis_skin_checked="1">
-          <div class="candle" bis_skin_checked="1">
-            <div class="flame" bis_skin_checked="1"></div>
-            <div class="smoke" bis_skin_checked="1"></div>
-          </div>
-          <div class="candle" bis_skin_checked="1">
-            <div class="flame" bis_skin_checked="1"></div>
-            <div class="smoke" bis_skin_checked="1"></div>
-          </div>
-          <div class="candle" bis_skin_checked="1">
-            <div class="flame" bis_skin_checked="1"></div>
-            <div class="smoke" bis_skin_checked="1"></div>
-          </div>
-          <div class="candle" bis_skin_checked="1">
-            <div class="flame" bis_skin_checked="1"></div>
-            <div class="smoke" bis_skin_checked="1"></div>
-          </div>
-          <div class="candle" bis_skin_checked="1">
-            <div class="flame" bis_skin_checked="1"></div>
-            <div class="smoke" bis_skin_checked="1"></div>
-          </div>
-        </div>
-
-        <!-- Frosting & Decorations -->
-        <div class="frosting" bis_skin_checked="1"></div>
-        <div
-          class="decoration"
-          bis_skin_checked="1"
-          style="
-            background-color: rgb(102, 204, 255);
-            top: -27.7843px;
-            left: 69.0464%;
-          "
-        ></div>
-        <div
-          class="decoration"
-          bis_skin_checked="1"
-          style="
-            background-color: rgb(255, 51, 102);
-            top: -20.9579px;
-            left: 63.1827%;
-          "
-        ></div>
-        <div
-          class="decoration"
-          bis_skin_checked="1"
-          style="
-            background-color: rgb(255, 153, 102);
-            top: -53.6883px;
-            left: 92.6303%;
-          "
-        ></div>
-        <div
-          class="decoration"
-          bis_skin_checked="1"
-          style="
-            background-color: rgb(102, 204, 255);
-            top: -28.5103px;
-            left: 15.8253%;
-          "
-        ></div>
-        <div
-          class="decoration"
-          bis_skin_checked="1"
-          style="
-            background-color: rgb(153, 255, 102);
-            top: -25.5573px;
-            left: 20.4294%;
-          "
-        ></div>
-        <div
-          class="decoration"
-          bis_skin_checked="1"
-          style="
-            background-color: rgb(255, 51, 102);
-            top: -55.9018px;
-            left: 22.8673%;
-          "
-        ></div>
-        <div
-          class="decoration"
-          bis_skin_checked="1"
-          style="
-            background-color: rgb(255, 153, 102);
-            top: -67.4554px;
-            left: 28.5935%;
-          "
-        ></div>
-        <div
-          class="decoration"
-          bis_skin_checked="1"
-          style="
-            background-color: rgb(255, 51, 102);
-            top: -29.2915px;
-            left: 2.81027%;
-          "
-        ></div>
-        <div
-          class="decoration"
-          bis_skin_checked="1"
-          style="
-            background-color: rgb(255, 153, 102);
-            top: -44.952px;
-            left: 98.2541%;
-          "
-        ></div>
-        <div
-          class="decoration"
-          bis_skin_checked="1"
-          style="
-            background-color: rgb(255, 153, 102);
-            top: -51.9292px;
-            left: 39.7651%;
-          "
-        ></div>
+    <!-- Birthday Cake with 20 Candles -->
+    <div class="cake-container">
+      <div class="cake">
+        <!-- Row 1 (top tier): 10 candles -->
+        <div class="candle-row candle-row-top" id="candleRowTop"></div>
+        <!-- Row 2 (middle tier): 10 candles -->
+        <div class="candle-row candle-row-bottom" id="candleRowBottom"></div>
       </div>
     </div>
 
+    <div style="text-align: center; margin-top: 15px; z-index: 20;">
+      <button class="btn" onclick="blowAllCandles()" style="font-size: 0.95rem; padding: 9px 22px; background: rgba(255, 255, 255, 0.22); border: 1px solid rgba(255, 255, 255, 0.6); backdrop-filter: blur(8px);">
+        💨 Blow Out All 20 Candles
+      </button>
+    </div>
+
     <!-- Enhanced Wish Message Popup -->
-    <div class="wish-message" id="wishMessage" bis_skin_checked="1">
-      <h2>✨ Happy Birthday! ✨</h2>
-      <p>Make a wish, Bestie! May all your dreams come true! 🎂✨</p>
-      <button class="btn" onclick="closeWishMessage()">Thank you! ❤️</button>
+    <div class="wish-message" id="wishMessage">
+      <h2>✨ Happy 20th Birthday, Chubbi! ✨</h2>
+      <p>Make a wish, my prettiest girl! May your 20s be filled with endless love, happiness, laughter, and all your dreams coming true! 🎂❤️</p>
+      <button class="btn" onclick="closeWishMessage()">Thank you, my love! ❤️</button>
     </div>
 
     <!-- Navigation Buttons -->
-    <div class="nav-buttons" bis_skin_checked="1">
+    <div class="nav-buttons">
       <button class="btn" onclick="goBack()">◀ Back to Memory Lane</button>
-      <button class="btn" onclick="goNext()">Next Surprise ▶</button>
+      <button class="btn" onclick="goNext()">Your Love Letter ▶</button>
     </div>
 
+    <!-- Scripts -->
+    <script src="assets/js/audio-controller.js"></script>
     <script>
-      // Global variables
       let candlesBlown = 0;
-      const totalCandles = 5;
+      const totalCandles = 20;
       let allCandlesBlown = false;
 
-      // Initialize the page when it loads
       document.addEventListener("DOMContentLoaded", function () {
         createCandles();
         createBalloons();
         createConfetti();
-        createDecorations();
 
-        // Add event listeners for candle interaction
         document.querySelectorAll(".candle").forEach((candle) => {
           candle.addEventListener("click", blowOutCandle);
-          candle.addEventListener("touchstart", blowOutCandle); // Better for mobile
+          candle.addEventListener("touchstart", blowOutCandle);
           candle.addEventListener("mouseover", function (e) {
             if (e.buttons === 0) {
-              // Only trigger on hover when not clicking
               blowOutCandle.call(this);
             }
           });
         });
 
-        // For better mobile experience with touch
         document.addEventListener("touchmove", function (e) {
           const touch = e.touches[0];
-          const element = document.elementFromPoint(
-            touch.clientX,
-            touch.clientY
-          );
-          if (
-            element &&
-            element.classList.contains("candle") &&
-            !element.classList.contains("blown")
-          ) {
+          const element = document.elementFromPoint(touch.clientX, touch.clientY);
+          if (element && element.classList.contains("candle") && !element.classList.contains("blown")) {
             blowOutCandle.call(element);
           }
         });
 
-        // Optional: Listen for keyboard input
         document.addEventListener("keypress", function (e) {
           if (e.key === "b" || e.key === "B") {
-            // Press 'b' to simulate blowing
             blowRandomCandle();
           }
         });
       });
 
-      // Create candles for the cake
       function createCandles() {
-        const candleContainer = document.getElementById("candleContainer");
+        const topRow = document.getElementById("candleRowTop");
+        const bottomRow = document.getElementById("candleRowBottom");
 
-        for (let i = 0; i < totalCandles; i++) {
-          const candle = document.createElement("div");
-          candle.className = "candle";
-
-          const flame = document.createElement("div");
-          flame.className = "flame";
-
-          const smoke = document.createElement("div");
-          smoke.className = "smoke";
-
-          candle.appendChild(flame);
-          candle.appendChild(smoke);
-          candleContainer.appendChild(candle);
+        // 10 on top, 10 on bottom = 20 total
+        for (let i = 0; i < 10; i++) {
+          topRow.appendChild(makeCandle());
+          bottomRow.appendChild(makeCandle());
         }
       }
 
-      // Create floating balloons
-      function createBalloons() {
-        const colors = ["#ff66b3", "#66ccff", "#ff9966", "#99ff66", "#cc99ff"];
-        const numBalloons = 15;
+      function makeCandle() {
+        const candle = document.createElement("div");
+        candle.className = "candle";
+        const flame = document.createElement("div");
+        flame.className = "flame";
+        const smoke = document.createElement("div");
+        smoke.className = "smoke";
 
-        for (let i = 0; i < numBalloons; i++) {
+        candle.appendChild(flame);
+        candle.appendChild(smoke);
+        return candle;
+      }
+
+      function createBalloons() {
+        const colors = ["#ff66b3", "#66ccff", "#ff9966", "#ffd166", "#cc99ff"];
+        for (let i = 0; i < 15; i++) {
           const balloon = document.createElement("div");
           balloon.className = "balloon";
-          balloon.style.backgroundColor =
-            colors[Math.floor(Math.random() * colors.length)];
+          balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
           balloon.style.left = `${Math.random() * 100}%`;
           balloon.style.animationDuration = `${15 + Math.random() * 10}s`;
           balloon.style.animationDelay = `${Math.random() * 5}s`;
@@ -757,16 +434,12 @@
         }
       }
 
-      // Create confetti pieces
       function createConfetti() {
-        const colors = ["#ffcc00", "#ff66b3", "#66ccff", "#ff9966", "#99ff66"];
-        const numConfetti = 50;
-
-        for (let i = 0; i < numConfetti; i++) {
+        const colors = ["#ffcc00", "#ff66b3", "#66ccff", "#ff9966", "#ffd166"];
+        for (let i = 0; i < 40; i++) {
           const confetti = document.createElement("div");
           confetti.className = "confetti";
-          confetti.style.backgroundColor =
-            colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
           confetti.style.left = `${Math.random() * 100}%`;
           confetti.style.width = `${5 + Math.random() * 5}px`;
           confetti.style.height = `${5 + Math.random() * 10}px`;
@@ -776,128 +449,88 @@
         }
       }
 
-      // Create cake decorations
-      function createDecorations() {
-        const cake = document.querySelector(".cake");
-        const colors = ["#ff3366", "#ffcc00", "#66ccff", "#ff9966", "#99ff66"];
-        const numDecorations = 10;
-
-        for (let i = 0; i < numDecorations; i++) {
-          const decoration = document.createElement("div");
-          decoration.className = "decoration";
-          decoration.style.backgroundColor =
-            colors[Math.floor(Math.random() * colors.length)];
-          decoration.style.top = `${-20 - Math.random() * 50}px`;
-          decoration.style.left = `${Math.random() * 100}%`;
-          cake.appendChild(decoration);
-        }
-      }
-
-      // Blow out a candle when clicked or hovered
       function blowOutCandle() {
-        if (!this.classList.contains("blown")) {
-          this.classList.add("blown");
+        const candle = this.closest('.candle') || this;
+        if (!candle.classList.contains("blown")) {
+          candle.classList.add("blown");
           candlesBlown++;
+          createSparkleEffect(candle);
 
-          // Create sparkle effect
-          createSparkleEffect(this);
-
-          // Check if all candles are blown
-          if (candlesBlown === totalCandles && !allCandlesBlown) {
+          if (candlesBlown >= totalCandles && !allCandlesBlown) {
             allCandlesBlown = true;
-            setTimeout(showWishMessage, 1000);
+            setTimeout(showWishMessage, 800);
           }
         }
       }
 
-      // Simulate blowing a random candle
+      function blowAllCandles() {
+        const unblown = Array.from(document.querySelectorAll(".candle:not(.blown)"));
+        unblown.forEach((candle, idx) => {
+          setTimeout(() => {
+            blowOutCandle.call(candle);
+          }, idx * 60);
+        });
+      }
+
       function blowRandomCandle() {
-        const unblownCandles = Array.from(
-          document.querySelectorAll(".candle:not(.blown)")
-        );
+        const unblownCandles = Array.from(document.querySelectorAll(".candle:not(.blown)"));
         if (unblownCandles.length > 0) {
-          const randomCandle =
-            unblownCandles[Math.floor(Math.random() * unblownCandles.length)];
+          const randomCandle = unblownCandles[Math.floor(Math.random() * unblownCandles.length)];
           blowOutCandle.call(randomCandle);
         }
       }
 
-      // Create sparkle effect around the blown candle
       function createSparkleEffect(candle) {
-        const numSparkles = 10;
         const candleRect = candle.getBoundingClientRect();
-
-        for (let i = 0; i < numSparkles; i++) {
+        for (let i = 0; i < 8; i++) {
           const sparkle = document.createElement("div");
           sparkle.className = "sparkle";
-          sparkle.style.left = `${
-            candleRect.left + Math.random() * candleRect.width
-          }px`;
-          sparkle.style.top = `${
-            candleRect.top + Math.random() * (candleRect.height / 2)
-          }px`;
-          sparkle.style.animation = `sparkle ${
-            0.5 + Math.random() * 0.5
-          }s forwards`;
+          sparkle.style.left = `${candleRect.left + Math.random() * candleRect.width}px`;
+          sparkle.style.top = `${candleRect.top + Math.random() * (candleRect.height / 2)}px`;
+          sparkle.style.animation = `sparkle ${0.5 + Math.random() * 0.5}s forwards`;
           document.body.appendChild(sparkle);
 
-          // Remove sparkle after animation
           setTimeout(() => {
-            sparkle.remove();
+            if (sparkle.parentNode) sparkle.parentNode.removeChild(sparkle);
           }, 1000);
         }
       }
 
-      // Show the wish message when all candles are blown
       function showWishMessage() {
         document.getElementById("wishMessage").classList.add("show");
         createFireworks();
       }
 
-      // Close the wish message
       function closeWishMessage() {
         document.getElementById("wishMessage").classList.remove("show");
       }
 
-      // Create fireworks effect
       function createFireworks() {
-        const numFireworks = 10;
-        const colors = ["#ff3366", "#ffcc00", "#66ccff", "#ff9966", "#99ff66"];
-
-        for (let i = 0; i < numFireworks; i++) {
+        const colors = ["#ff3366", "#ffcc00", "#66ccff", "#ff9966", "#ffd166"];
+        for (let i = 0; i < 12; i++) {
           setTimeout(() => {
             const firework = document.createElement("div");
             firework.className = "firework";
             firework.style.left = `${10 + Math.random() * 80}%`;
             firework.style.top = `${10 + Math.random() * 60}%`;
-            firework.style.backgroundColor =
-              colors[Math.floor(Math.random() * colors.length)];
-            firework.style.animation = `firework ${
-              1 + Math.random()
-            }s forwards`;
+            firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            firework.style.animation = `firework ${1 + Math.random()}s forwards`;
             document.body.appendChild(firework);
 
-            // Remove firework after animation
             setTimeout(() => {
-              firework.remove();
+              if (firework.parentNode) firework.parentNode.removeChild(firework);
             }, 2000);
-          }, i * 300);
+          }, i * 250);
         }
       }
 
-      // Navigation functions
       function goBack() {
-        // Replace with actual back URL
-
         window.location.href = "memorylane.html";
       }
 
       function goNext() {
-        // Replace with actual next URL
-
         window.location.href = "letter.html";
       }
     </script>
-
-    </body>
+  </body>
 </html>
