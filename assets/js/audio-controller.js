@@ -232,60 +232,53 @@
       });
   }
 
-  // Toggle mute
+  // Toggle sound mute only (video keeps running continuously in background)
   function toggleMute() {
     if (!bgVideo) return;
 
+    // Always keep video running
     if (bgVideo.paused) {
-      startMedia();
-      return;
+      bgVideo.play().catch(() => {});
     }
 
     bgVideo.muted = !bgVideo.muted;
+    if (!bgVideo.muted) {
+      bgVideo.volume = TARGET_VOLUME;
+    }
     sessionStorage.setItem('bgMusicMuted', bgVideo.muted.toString());
-    updateButtonUI(!bgVideo.muted);
+    updateButtonUI();
   }
 
-  // Fade down or pause when a song video modal opens
+  // Fade down sound when a preview plays (keeps background video running)
   function fadeDownMedia() {
     if (!bgVideo) return;
-    wasPlayingBeforeVideo = !bgVideo.paused;
-    if (!wasPlayingBeforeVideo) return;
-
     clearInterval(fadeInterval);
-    const step = bgVideo.volume / 10;
+    const step = bgVideo.volume / 8;
     fadeInterval = setInterval(() => {
       if (bgVideo.volume > 0.05) {
         bgVideo.volume = Math.max(0, bgVideo.volume - step);
       } else {
         clearInterval(fadeInterval);
-        bgVideo.pause();
+        bgVideo.volume = 0;
       }
     }, 40);
   }
 
-  // Fade in or resume when a song video modal closes
+  // Fade sound back in when preview closes
   function resumeMedia() {
-    if (!bgVideo || !wasPlayingBeforeVideo) return;
-
+    if (!bgVideo) return;
     clearInterval(fadeInterval);
-    bgVideo.volume = 0;
-    bgVideo
-      .play()
-      .then(() => {
-        sessionStorage.setItem('bgMusicPlaying', 'true');
-        updateButtonUI(true);
-        const step = TARGET_VOLUME / 10;
-        fadeInterval = setInterval(() => {
-          if (bgVideo.volume < TARGET_VOLUME - 0.05) {
-            bgVideo.volume = Math.min(TARGET_VOLUME, bgVideo.volume + step);
-          } else {
-            bgVideo.volume = TARGET_VOLUME;
-            clearInterval(fadeInterval);
-          }
-        }, 50);
-      })
-      .catch((err) => console.log('Resume error:', err));
+    if (!bgVideo.muted) {
+      const step = TARGET_VOLUME / 8;
+      fadeInterval = setInterval(() => {
+        if (bgVideo.volume < TARGET_VOLUME - 0.04) {
+          bgVideo.volume = Math.min(TARGET_VOLUME, bgVideo.volume + step);
+        } else {
+          bgVideo.volume = TARGET_VOLUME;
+          clearInterval(fadeInterval);
+        }
+      }, 40);
+    }
   }
 
   // Floating button
@@ -395,28 +388,27 @@
     btn.addEventListener('click', toggleMute);
     document.body.appendChild(btn);
 
-    const isPlaying = bgVideo && !bgVideo.paused && !bgVideo.muted;
-    updateButtonUI(isPlaying);
+    updateButtonUI();
   }
 
-  function updateButtonUI(isPlaying) {
+  function updateButtonUI() {
     const btn = document.getElementById('floating-music-btn');
-    if (!btn) return;
+    if (!btn || !bgVideo) return;
     const icon = document.getElementById('music-btn-icon');
     const wave = document.getElementById('music-wave-bars');
 
-    if (bgVideo && bgVideo.muted) {
+    if (bgVideo.muted) {
       btn.classList.add('music-muted');
+      btn.title = 'Unmute sound (Zehnaseeb)';
+      btn.setAttribute('aria-label', 'Unmute sound');
       if (icon) icon.textContent = '🔇';
       if (wave) wave.style.display = 'none';
-    } else if (isPlaying) {
+    } else {
       btn.classList.remove('music-muted');
+      btn.title = 'Mute sound (Zehnaseeb)';
+      btn.setAttribute('aria-label', 'Mute sound');
       if (icon) icon.textContent = '🎵';
       if (wave) wave.style.display = 'flex';
-    } else {
-      btn.classList.add('music-muted');
-      if (icon) icon.textContent = '▶️';
-      if (wave) wave.style.display = 'none';
     }
   }
 
