@@ -27,7 +27,7 @@
       video.setAttribute('autoplay', '');
       video.setAttribute('playsinline', '');
       video.setAttribute('webkit-playsinline', '');
-      video.preload = 'auto';
+      video.preload = 'metadata';
 
       const source = document.createElement('source');
       source.src = VIDEO_SRC;
