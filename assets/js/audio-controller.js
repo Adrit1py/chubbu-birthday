@@ -123,10 +123,23 @@
     const savedMuted = sessionStorage.getItem('bgMusicMuted');
     bgVideo.muted = savedMuted === 'true';
 
-    // Restore saved playback time
-    const savedTime = parseFloat(sessionStorage.getItem('bgMusicTime') || '0');
-    if (!isNaN(savedTime) && savedTime > 0) {
-      bgVideo.currentTime = savedTime;
+    // Check if on landing page (index.html or root /)
+    const pathname = window.location.pathname.toLowerCase();
+    const isLandingPage = pathname.endsWith('index.html') || pathname === '/' || pathname.endsWith('/');
+
+    if (isLandingPage) {
+      // Landing page: always start video from the beginning (0s)
+      bgVideo.currentTime = 0;
+      sessionStorage.setItem('bgMusicTime', '0');
+      bgVideo.addEventListener('loadedmetadata', () => {
+        bgVideo.currentTime = 0;
+      }, { once: true });
+    } else {
+      // Subsequent pages (memorylane, cake, letter): continue from saved playback time
+      const savedTime = parseFloat(sessionStorage.getItem('bgMusicTime') || '0');
+      if (!isNaN(savedTime) && savedTime > 0) {
+        bgVideo.currentTime = savedTime;
+      }
     }
 
     // Save playback position
@@ -471,9 +484,18 @@
     }, { passive: true });
   }
 
+  // Reset video & audio to beginning (0s)
+  function resetToStart() {
+    if (bgVideo) {
+      bgVideo.currentTime = 0;
+      sessionStorage.setItem('bgMusicTime', '0');
+    }
+  }
+
   // Export methods globally
   window.BgMusicController = {
     start: startMedia,
+    resetToStart: resetToStart,
     toggleMute: toggleMute,
     fadeDown: fadeDownMedia,
     resume: resumeMedia,
