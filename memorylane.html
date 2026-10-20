@@ -361,32 +361,7 @@
         border: 2px solid rgba(255, 255, 255, 0.6);
       }
 
-      .balloon {
-        position: fixed;
-        width: 60px;
-        height: 70px;
-        background: radial-gradient(circle at 30% 30%, #ff7eb9, #ff1493);
-        border-radius: 50%;
-        box-shadow: inset -5px -5px 0 rgba(0, 0, 0, 0.2);
-        animation: floatUp 15s linear infinite;
-        z-index: 2;
-        pointer-events: none;
-      }
 
-      .balloon::before {
-        content: "";
-        position: absolute;
-        width: 2px;
-        height: 80px;
-        background: rgba(255, 255, 255, 0.4);
-        top: 100%;
-        left: 50%;
-      }
-
-      @keyframes floatUp {
-        0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-        100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-      }
 
       @keyframes float {
         0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -446,10 +421,7 @@
         </p>
       </div>
 
-      <!-- Floating Balloons -->
-      <div class="balloon" style="left: 10%; animation-delay: 0s;"></div>
-      <div class="balloon" style="left: 85%; animation-delay: 5s;"></div>
-      <div class="balloon" style="left: 50%; animation-delay: 10s;"></div>
+
 
       <div class="gallery-container">
         <div class="slideshow-controls">
