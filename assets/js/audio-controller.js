@@ -22,7 +22,9 @@
       video = document.createElement('video');
       video.id = 'bg-video';
       video.loop = true;
+      video.autoplay = true;
       video.playsInline = true;
+      video.setAttribute('autoplay', '');
       video.setAttribute('playsinline', '');
       video.setAttribute('webkit-playsinline', '');
       video.preload = 'auto';
@@ -117,9 +119,9 @@
 
     bgVideo.volume = TARGET_VOLUME;
 
-    // Check saved mute state
-    const isMuted = sessionStorage.getItem('bgMusicMuted') === 'true';
-    bgVideo.muted = isMuted;
+    // Check saved mute state (default to false if not set so audio plays)
+    const savedMuted = sessionStorage.getItem('bgMusicMuted');
+    bgVideo.muted = savedMuted === 'true';
 
     // Restore saved playback time
     const savedTime = parseFloat(sessionStorage.getItem('bgMusicTime') || '0');
@@ -134,19 +136,51 @@
       } catch (e) {}
     });
 
-    // Check if previously playing
-    const shouldPlay = sessionStorage.getItem('bgMusicPlaying') === 'true';
-    if (shouldPlay) {
-      bgVideo
-        .play()
-        .then(() => {
-          updateButtonUI(true);
-        })
-        .catch(() => {
-          updateButtonUI(false);
-        });
-    }
+    // Make Zehnaseeb video play by default on opening site
+    const attemptAutoplay = () => {
+      const playPromise = bgVideo.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            sessionStorage.setItem('bgMusicPlaying', 'true');
+            updateButtonUI(true);
+          })
+          .catch((err) => {
+            console.info('Unmuted autoplay blocked by browser policy; starting muted video first:', err);
+            // Browser restricted unmuted autoplay; play video muted so it runs by default
+            bgVideo.muted = true;
+            bgVideo.play()
+              .then(() => {
+                sessionStorage.setItem('bgMusicPlaying', 'true');
+                updateButtonUI(false);
+              })
+              .catch((e) => {
+                console.warn('Muted autoplay also blocked:', e);
+              });
 
+            // Automatically unmute audio on the very first tap or click anywhere on the page
+            const enableAudioOnInteraction = () => {
+              if (bgVideo) {
+                bgVideo.muted = false;
+                bgVideo.volume = TARGET_VOLUME;
+                sessionStorage.setItem('bgMusicMuted', 'false');
+                sessionStorage.setItem('bgMusicPlaying', 'true');
+                bgVideo.play().catch(() => {});
+                updateButtonUI(true);
+              }
+              window.removeEventListener('click', enableAudioOnInteraction);
+              window.removeEventListener('touchstart', enableAudioOnInteraction);
+              window.removeEventListener('keydown', enableAudioOnInteraction);
+            };
+
+            window.addEventListener('click', enableAudioOnInteraction, { once: true });
+            window.addEventListener('touchstart', enableAudioOnInteraction, { once: true });
+            window.addEventListener('keydown', enableAudioOnInteraction, { once: true });
+          });
+      }
+    };
+
+    attemptAutoplay();
     createFloatingMuteButton();
   }
 
@@ -171,7 +205,8 @@
     if (!bgVideo) return;
 
     bgVideo.volume = TARGET_VOLUME;
-    bgVideo.muted = sessionStorage.getItem('bgMusicMuted') === 'true';
+    bgVideo.muted = false;
+    sessionStorage.setItem('bgMusicMuted', 'false');
 
     bgVideo
       .play()
